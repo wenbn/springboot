@@ -1,0 +1,113 @@
+package ${package.ServiceImpl};
+
+import ${package.Entity}.${entity};
+import ${package.Mapper}.${table.mapperName};
+import ${package.Service}.${table.serviceName};
+import ${superServiceImplClassPackage};
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
+
+import java.util.Map;
+/**
+ * <p>
+ * $!{table.comment} 服务实现类
+ * </p>
+ *
+ * @author ${author}
+ * @since ${date}
+ */
+@Service
+@Slf4j
+#if(${kotlin})
+open class ${table.serviceImplName} : ${superServiceImplClass}<${table.mapperName}, ${entity}>(), ${table.serviceName} {
+
+}
+#else
+public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.mapperName}, ${entity}> implements ${table.serviceName} {
+
+    /**
+     * 添加$!{table.comment}
+     * @param ${table.entityPath}
+     * @return
+     */
+    @Override
+    public ResultVo add${entity}(${entity} ${table.entityPath}){
+        boolean save  = this.save(${table.entityPath});
+        if(save){
+            return ResultVo.success();
+        }
+        return ResultVo.error(ResultVo.Status.SYS_REQUIRED_FAILURE);
+    }
+
+    /**
+     * 删除$!{table.comment}
+     * @param id
+     * @return
+     */
+    @Override
+    public ResultVo delete${entity}ById(@PathVariable #foreach($field in ${table.fields})#if(${field.keyFlag})${field.propertyType}#end#end id){
+        boolean save  = this.removeById(id);
+        if(save){
+            return ResultVo.success();
+        }
+        return ResultVo.error(ResultVo.Status.SYS_REQUIRED_FAILURE);
+    }
+
+    /**
+     * 修改$!{table.comment}
+     * @param ${table.entityPath}
+     * @return
+     */
+    @Override
+    public ResultVo update${entity}(${entity} ${table.entityPath}){
+        boolean save  = this.updateById(${table.entityPath});
+        if(save){
+            return ResultVo.success();
+        }
+        return ResultVo.error(ResultVo.Status.SYS_REQUIRED_FAILURE);
+    }
+
+    /**
+     * 查询$!{table.comment}列表
+     * @param condition
+     * @return
+     */
+    @Override
+    public ResultVo get${entity}List(Map<String,Object> condition){
+        //当前页
+        int pageIndex = StringUtil.getAsInt(StringUtil.trim(condition.get("pageIndex")),1);
+        //
+        int pageSize = StringUtil.getAsInt(StringUtil.trim(condition.get("pageSize")),10);
+        //排序的字段
+        String orderBy = StringUtil.trim(condition.get("orderBy"));
+        //排序规则
+        String orderDirection = StringUtil.trim(condition.get("orderDirection"));
+
+        return new AbstractPageTemplate<${entity}>() {
+            @Override
+            protected List executeSql() {
+                QueryWrapper<${entity}> queryWrapper = new QueryWrapper<>();
+                if(!StringUtil.isEmpty(orderBy)){
+                    queryWrapper.orderBy(true,(orderDirection == null  || orderDirection.equals("true") )? true :  false ,orderBy);
+                }
+                return list(queryWrapper);
+            }
+        }.preparePageTemplate(pageIndex,pageSize);
+    }
+
+    /**
+     * 获取$!{table.comment}详情
+     * @param id
+     * @return
+     */
+    @Override
+    public ResultVo get${entity}Detail(#foreach($field in ${table.fields})#if(${field.keyFlag})${field.propertyType}#end#end id){
+        ResultVo vo = new ResultVo();
+        ${entity} entity = this.getById(id);
+        vo.setDataSet(entity);
+        return vo;
+    }
+
+}
+#end

@@ -1,0 +1,57 @@
+package ${package.Service};
+
+import ${package.Entity}.${entity};
+import ${superServiceClassPackage};
+
+import java.util.Map;
+import org.springframework.web.bind.annotation.PathVariable;
+/**
+ * <p>
+ * $!{table.comment} 服务类
+ * </p>
+ *
+ * @author ${author}
+ * @since ${date}
+ */
+#if(${kotlin})
+interface ${table.serviceName} : ${superServiceClass}<${entity}>
+#else
+public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
+
+    /**
+     * 添加$!{table.comment}
+     * @param ${table.entityPath}
+     * @return
+     */
+    ResultVo add${entity}(${entity} ${table.entityPath});
+
+    /**
+     * 修改$!{table.comment}
+     * @param ${table.entityPath}
+     * @return
+    */
+    ResultVo update${entity}(${entity} ${table.entityPath});
+
+    /**
+     * 删除$!{table.comment}
+     * @param id
+     * @return
+    */
+    ResultVo delete${entity}ById(@PathVariable #foreach($field in ${table.fields})#if(${field.keyFlag})${field.propertyType}#end#end id);
+
+    /**
+     * 查询$!{table.comment}列表
+     * @param condition
+     * @return
+     */
+    ResultVo get${entity}List(Map<String,Object> condition);
+
+    /**
+     * 获取$!{table.comment}详情
+     * @param id
+     * @return
+     */
+    ResultVo get${entity}Detail(#foreach($field in ${table.fields})#if(${field.keyFlag})${field.propertyType}#end#end id);
+
+}
+#end

@@ -1,0 +1,57 @@
+package ${package.Manager};
+
+import ${package.Entity}.${entity};
+import ${superManagerClassPackage};
+
+import java.util.Map;
+import org.springframework.web.bind.annotation.PathVariable;
+/**
+ * <p>
+ * $!{table.comment} 服务类
+ * </p>
+ *
+ * @author ${author}
+ * @since ${date}
+ */
+#if(${kotlin})
+interface ${table.managerName}
+#else
+public interface ${table.managerName} {
+
+    /**
+     * 添加$!{table.comment}
+     * @param ${table.entityPath}
+     * @return
+     */
+    ResultVo add${entity}(${entity} ${table.entityPath});
+
+    /**
+     * 删除$!{table.comment}
+     * @param id
+     * @return
+     */
+    ResultVo delete${entity}ById(@PathVariable #foreach($field in ${table.fields})#if(${field.keyFlag})${field.propertyType}#end#end id);
+
+    /**
+     * 修改$!{table.comment}
+     * @param ${table.entityPath}
+     * @return
+     */
+    ResultVo update${entity}(${entity} ${table.entityPath});
+
+    /**
+     * 查询$!{table.comment}列表
+     * @param reqMap
+     * @return
+     */
+    ResultVo get${entity}List(Map<String,Object> reqMap);
+
+    /**
+     * 获取$!{table.comment}详情
+     * @param id
+     * @return
+     */
+    ResultVo get${entity}Detail(#foreach($field in ${table.fields})#if(${field.keyFlag})${field.propertyType}#end#end id);
+
+}
+#end

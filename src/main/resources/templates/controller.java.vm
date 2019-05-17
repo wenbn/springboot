@@ -1,0 +1,100 @@
+package ${package.Controller};
+
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import java.util.Map;
+
+#if(${restControllerStyle})
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+#else
+import org.springframework.stereotype.Controller;
+#end
+#if(${superControllerClassPackage})
+import ${superControllerClassPackage};
+#end
+
+import ${package.Manager}.${table.managerName};
+import ${package.Entity}.${entity};
+
+/**
+ * <p>
+ * $!{table.comment} 前端控制器
+ * </p>
+ *
+ * @author ${author}
+ * @since ${date},
+ */
+#if(${restControllerStyle})
+@RestController
+#else
+@Controller
+#end
+@ResponseBody
+@RequestMapping("#if(${package.ModuleName})/${package.ModuleName}#end/#if(${controllerMappingHyphenStyle})${controllerMappingHyphen}#else${table.entityPath}#end")
+@Slf4j
+#if(${kotlin})
+class ${table.controllerName}#if(${superControllerClass}) : ${superControllerClass}()#end
+
+#else
+#if(${superControllerClass})
+public class ${table.controllerName} extends ${superControllerClass} {
+#else
+public class ${table.controllerName} {
+#end
+
+
+    @Autowired
+    public ${table.managerName} ${table.entityPath}Manager;
+
+    /**
+     * 添加$!{table.comment}
+     * @return ResultVo
+     */
+    @PostMapping("/add")
+    public ResultVo add${entity}(@RequestBody ${entity} ${table.entityPath}) throws Exception {
+        return ${table.entityPath}Manager.add${entity}(${table.entityPath});
+    }
+
+    /**
+    * 删除$!{table.comment}
+    * @return ResultVo
+    */
+    @PostMapping("/remove/{id}")
+    public ResultVo delete${entity}ById (@PathVariable #foreach($field in ${table.fields})#if(${field.keyFlag})${field.propertyType}#end#end id){
+        return ${table.entityPath}Manager.delete${entity}ById(id);
+    }
+
+    /**
+     * 修改$!{table.comment}
+     * @return ResultVo
+     */
+    @PostMapping("/edit")
+    public ResultVo update${entity}(@RequestBody ${entity} ${table.entityPath}) {
+        return ${table.entityPath}Manager.update${entity}(${table.entityPath});
+    }
+
+    /**
+    * 查询$!{table.comment}列表
+    * @return ResultVo
+    */
+    @PostMapping("/list")
+    public ResultVo get${entity}List (@RequestBody Map<String,Object> reqMap) {
+        return ${table.entityPath}Manager.get${entity}List(reqMap);
+    }
+
+    /**
+    * 获取$!{table.comment}详情
+    * @return ResultVo
+    */
+    @PostMapping("/detail/{id}")
+    public ResultVo get${entity}Detail (@PathVariable #foreach($field in ${table.fields})#if(${field.keyFlag})${field.propertyType}#end#end id) {
+        return ${table.entityPath}Manager.get${entity}Detail(id);
+    }
+
+
+}
+#end

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="www.yihexinda.com.mapper.HsSysPermissionDao">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="www.yihexinda.com.model.HsSysPermissionDto">
+        <id column="ID" property="id" />
+        <result column="PERMISSION_NAME" property="permissionName" />
+        <result column="PERMISSION_TYPE" property="permissionType" />
+        <result column="PERMISSION_URL" property="permissionUrl" />
+        <result column="PERMISSION_CODE" property="permissionCode" />
+        <result column="PARENT_ID" property="parentId" />
+        <result column="CURRENT_LEVEL" property="currentLevel" />
+        <result column="SORT_NO" property="sortNo" />
+        <result column="IS_FORBIDDEN" property="isForbidden" />
+        <result column="IS_DEL" property="isDel" />
+        <result column="ICON" property="icon" />
+        <result column="CREATE_BY" property="createBy" />
+        <result column="CREATE_TIME" property="createTime" />
+        <result column="UPDATE_BY" property="updateBy" />
+        <result column="UPDATE_TIME" property="updateTime" />
+        <result column="STANDBY1" property="standby1" />
+        <result column="STANDBY2" property="standby2" />
+        <result column="STANDBY3" property="standby3" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        ID, PERMISSION_NAME, PERMISSION_TYPE, PERMISSION_URL, PERMISSION_CODE, PARENT_ID, CURRENT_LEVEL, SORT_NO, IS_FORBIDDEN, IS_DEL, ICON, CREATE_BY, CREATE_TIME, UPDATE_BY, UPDATE_TIME, STANDBY1, STANDBY2, STANDBY3
+    </sql>
+
+</mapper>

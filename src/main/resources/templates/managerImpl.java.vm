@@ -1,0 +1,66 @@
+package ${package.ManagerImpl};
+
+import ${package.Entity}.${entity};
+import ${package.Manager}.${table.managerName};
+import ${superManagerImplClassPackage};
+import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.*;
+import java.util.Map;
+
+import ${package.Entity}.${entity};
+import ${package.Service}.${table.serviceName};
+import org.springframework.web.bind.annotation.PathVariable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+/**
+ * <p>
+ * $!{table.comment} 服务实现类
+ * </p>
+ *
+ * @author ${author}
+ * @since ${date}
+ */
+@Service
+@Slf4j
+#if(${kotlin})
+open class ${table.managerImplName} ${table.managerName} {
+
+}
+#else
+public class ${table.managerImplName} implements ${table.managerName} {
+
+    @Autowired
+    public ${table.serviceName} ${table.entityPath}Service;
+
+    //添加$!{table.comment}
+    @Override
+    public ResultVo add${entity}(${entity} ${table.entityPath}){
+        return ${table.entityPath}Service.add${entity}(${table.entityPath});
+    }
+
+    //删除$!{table.comment}
+    @Override
+    public ResultVo delete${entity}ById(@PathVariable #foreach($field in ${table.fields})#if(${field.keyFlag})${field.propertyType}#end#end id){
+        return ${table.entityPath}Service.delete${entity}ById(id);
+    }
+
+    //修改$!{table.comment}
+    @Override
+    public ResultVo update${entity}(${entity} ${table.entityPath}){
+        return ${table.entityPath}Service.update${entity}(${table.entityPath});
+    }
+
+    //查询$!{table.comment}列表
+    @Override
+    public ResultVo get${entity}List(Map<String,Object> condition){
+        return ${table.entityPath}Service.get${entity}List(condition);
+    }
+
+    //获取$!{table.comment}详情
+    @Override
+    public ResultVo get${entity}Detail(#foreach($field in ${table.fields})#if(${field.keyFlag})${field.propertyType}#end#end id){
+        return ${table.entityPath}Service.get${entity}Detail(id);
+    }
+}
+#end

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="www.yihexinda.com.mapper.HsSysUserDao">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="www.yihexinda.com.model.HsSysUserDto">
+        <id column="ID" property="id" />
+        <result column="USERCODE" property="usercode" />
+        <result column="USERNAME" property="username" />
+        <result column="PASSWORD" property="password" />
+        <result column="USER_LOGO" property="userLogo" />
+        <result column="MOBILE" property="mobile" />
+        <result column="SALT" property="salt" />
+        <result column="LOCKED" property="locked" />
+        <result column="CITY" property="city" />
+        <result column="COMMUNITY" property="community" />
+        <result column="SUB_COMMUNITY" property="subCommunity" />
+        <result column="GOLD" property="gold" />
+        <result column="IS_DEL" property="isDel" />
+        <result column="CREATE_BY" property="createBy" />
+        <result column="CREATE_TIME" property="createTime" />
+        <result column="UPDATE_BY" property="updateBy" />
+        <result column="UPDATE_TIME" property="updateTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        ID, USERCODE, USERNAME, PASSWORD, USER_LOGO, MOBILE, SALT, LOCKED, CITY, COMMUNITY, SUB_COMMUNITY, GOLD, IS_DEL, CREATE_BY, CREATE_TIME, UPDATE_BY, UPDATE_TIME
+    </sql>
+
+</mapper>
