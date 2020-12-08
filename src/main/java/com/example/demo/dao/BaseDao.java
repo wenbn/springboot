@@ -1,10 +1,11 @@
 package com.example.demo.dao;
 
+import cn.hutool.core.convert.Convert;
+import cn.hutool.core.util.StrUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
-import org.utils.StringUtil;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -33,11 +34,11 @@ public class BaseDao extends SqlSessionDaoSupport {
      * @return
      */
     protected Map<Object, Object> executeSql(Map<Object, Object> condition, String sql) {
-        String _pageIndex = StringUtil.trim(condition.get("pageIndex"));
-        String _pageSize = StringUtil.trim(condition.get("pageSize"));
-        if(StringUtil.hasText(_pageIndex)&& StringUtil.hasText(_pageSize)){
-            int pageIndex = StringUtil.getAsInt(_pageIndex);
-            int pageSize = StringUtil.getAsInt(_pageSize);
+        String _pageIndex = StrUtil.toString(condition.get("pageIndex"));
+        String _pageSize = StrUtil.toString(condition.get("pageSize"));
+        if(!StrUtil.isEmpty(_pageIndex)&& !StrUtil.isEmpty(_pageSize)){
+            int pageIndex = Convert.toInt(_pageIndex);
+            int pageSize = Convert.toInt(_pageSize);
             PageHelper.startPage(pageIndex,pageSize);
             List<Object> resultList = this.getSqlSession().selectList(sql ,condition);
             condition.clear();

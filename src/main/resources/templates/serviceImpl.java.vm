@@ -7,7 +7,11 @@ import ${superServiceImplClassPackage};
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 
+import cn.hutool.core.convert.Convert;
+import cn.hutool.core.util.StrUtil;
+import java.util.List;
 import java.util.Map;
 /**
  * <p>
@@ -76,19 +80,19 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
     @Override
     public ResultVo get${entity}List(Map<String,Object> condition){
         //当前页
-        int pageIndex = StringUtil.getAsInt(StringUtil.trim(condition.get("pageIndex")),1);
+        int pageIndex = Convert.toInt(condition.get("pageIndex"),1);
         //
-        int pageSize = StringUtil.getAsInt(StringUtil.trim(condition.get("pageSize")),10);
+        int pageSize =  Convert.toInt(condition.get("pageSize"),10);
         //排序的字段
-        String orderBy = StringUtil.trim(condition.get("orderBy"));
+        String orderBy = StrUtil.trim(Convert.toStr(condition.get("orderBy")));
         //排序规则
-        String orderDirection = StringUtil.trim(condition.get("orderDirection"));
+        String orderDirection = StrUtil.trim(Convert.toStr(condition.get("orderDirection")));
 
         return new AbstractPageTemplate<${entity}>() {
             @Override
             protected List executeSql() {
                 QueryWrapper<${entity}> queryWrapper = new QueryWrapper<>();
-                if(!StringUtil.isEmpty(orderBy)){
+                if(!StrUtil.isEmpty(orderBy)){
                     queryWrapper.orderBy(true,(orderDirection == null  || orderDirection.equals("true") )? true :  false ,orderBy);
                 }
                 return list(queryWrapper);

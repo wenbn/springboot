@@ -26,11 +26,11 @@ public class Running {
     private static String canonicalPath = "";
 
     //基本包名
-    private static String basePackage = "com.yhxd.modular.system";
+    private static String basePackage = "com.modular.system";
     //作者
     private static String authorName = "wenbn";
     //要生成的表名
-    private static String[] tables = {"lc_project_tasks_receipt_template","lc_project_tasks_receipt"};
+    private static String[] tables = {"member_svip_order"};
     //table前缀
     private static String prefix = "";
 
@@ -48,9 +48,10 @@ public class Running {
     private static DbType dbType = DbType.MYSQL;
     //数据库配置四要素
     private static String driverName = "com.mysql.jdbc.Driver";
-    private static String url = "jdbc:mysql://localhost:3306/milestone?useSSL=false&useUnicode=true&characterEncoding=utf8";
+    private static String url = "jdbc:mysql://localhost:3306/member_svip?useSSL=false&useUnicode=true&characterEncoding=utf8";
+//    private static String url = "jdbc:mysql://localhost:3306/member_svip?useSSL=false&useUnicode=true&characterEncoding=utf8";
     private static String username = "root";
-    private static String password = "123";
+    private static String password = "123456";
 
     public static void main(String[] args) {
         WenbnAutoGenerator gen = new WenbnAutoGenerator();
@@ -111,7 +112,7 @@ public class Running {
         wenbnGlobalConfig.setControllerName("%sController");
 
 
-//        wenbnGlobalConfig.setSwagger2(true);//model swagger2
+        wenbnGlobalConfig.setSwagger2(true);//model swagger2
         gen.setGlobalConfig(wenbnGlobalConfig);
 //        gen.setGlobalConfig(new GlobalConfig()
 //                .setOutputDir( canonicalPath + "/src/main/java")//输出目录
